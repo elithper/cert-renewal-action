@@ -16,10 +16,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - run: |
+      - name: Install Python deps and run cert update tool
+        run: |
           echo -e "$ACCOUNT_KEY" > ./account_key.pem
+          echo "$BUCKET_NAME"
           pip install -r requirements.txt
-          python -m acme_linode_objectstorage -k ./account_key.pem $BUCKET_NAME --agree-to-terms-of-service
+          python -m acme_linode_objectstorage -k ./account_key.pem --agree-to-terms-of-service "$BUCKET_NAME"
         env:
           BUCKET_NAME: ${{ env.BUCKET_NAME }}
           LINODE_TOKEN: ${{ secrets.LINODE_TOKEN }}
