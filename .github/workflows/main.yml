@@ -1,4 +1,4 @@
-name: cert-renewal
+name: Renew certificate for Linode Object Storage
 
 on:
   schedule:
