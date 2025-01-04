@@ -1,0 +1,26 @@
+name: cert-renewal
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
+
+
+jobs:
+  renew_cert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: dcoles/acme-linode-objectstorage
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: |
+          echo -e "$ACCOUNT_KEY" > ./account_key.pem
+          pip install -r requirements.txt
+          python -m acme_linode_objectstorage -k ./account_key.pem $BUCKET_NAME --agree-to-terms-of-service
+        env:
+          BUCKET_NAME: ${{ env.BUCKET_NAME }}
+          LINODE_TOKEN: ${{ secrets.LINODE_TOKEN }}
+          ACCOUNT_KEY: ${{ secrets.ACCOUNT_KEY }}
