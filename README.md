@@ -4,7 +4,7 @@ This is a small GitHub Action to renew the Let's Encrypt certificate for my pers
 
 It uses David Coles' [acme-linode-objectstorage](https://github.com/dcoles/acme-linode-objectstorage) to request a new certificate and handle the resulting ACME challenge.
 
-## Prerequisites
+## Setup
 
 For the action to run, `BUCKET_NAME` must be set to the custom domain used for the bucket, e.g. `assets.michaelhoward.kiwi`.
 
